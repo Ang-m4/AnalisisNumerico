@@ -2,22 +2,38 @@
 @author: Andres Giraldo, Camilo Garcia, David Ramirez
 """
 from euler import *
+from numpy import *
 from matplotlib.pyplot import *
 
 
-def f(a, y):
+a = 2  # Un valor dentro del intervalo [0, 10]
+t0 = 0  # Valor inicial de t
+y0 = 1  # Valor inicial de y
+h = 0.1  # Cantidad para el paso
+m = 100  # Numero de pasos
+
+
+def dy(t, y):
     return (-1 * a) * y  # Funcion y' = -αy
 
 
-m = 100  # Valor final del intervalor
-a0 = 0  # Valor inicial de α
-y0 = 1  # Valor inicial de y
-h = 0.1  # Cantidad para el paso
-[u, v] = euler(f, a0, y0, h, m)
+def y(t):
+    return y0 * exp((-1 * a) * i)  # Funcion y = y0e^-αt
+
+
+# Solucion numerica
+[u, v] = euler(dy, t0, y0, h, m)
+
+# Solucion analitica
+[ua, va] = [arange(t0, 10, h), []]
+for i in arange(t0, 10, h):
+    va.append(y(i))
 
 # Grafica
 plot(u, v, "b")
-title("Solución numerica método Euler")
-xlabel("α")
+plot(ua, va, "r--")
+title("Solución con método Euler")
+xlabel("t")
 ylabel("y")
+legend(["Solucion numerica", "Solucion analitica"])
 show()
